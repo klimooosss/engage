@@ -1,24 +1,11 @@
 import mongoose, { mongo } from "mongoose";
 import bcrypt from 'bcrypt'
 
-// template for users cluster
-const userSchema = new mongoose.Schema({
+//test user schema for testing
+const testUserSchema = new mongoose.Schema({
     username: {
         type:String,
         required: true,
-    },
-    phone: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    adress: {
-        type: String,
-        required: false
-    },
-    desc:{
-        type:String,
-        required: false
     },
     email: {
         type: String,
@@ -30,10 +17,6 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 6
     },
-    userType: {
-        type:String,
-        required: true
-    },
     profileImage:{
         type:String,
         default:""
@@ -43,8 +26,50 @@ const userSchema = new mongoose.Schema({
         timestamps: true, //createdAt. updatedAt
     }
 );
+// template for users cluster
+// const userSchema = new mongoose.Schema({
+//     username: {
+//         type:String,
+//         required: true,
+//     },
+//     phone: {
+//         type: String,
+//         required: true,
+//         unique: true
+//     },
+//     adress: {
+//         type: String,
+//         required: false
+//     },
+//     desc:{
+//         type:String,
+//         required: false
+//     },
+//     email: {
+//         type: String,
+//         required: true,
+//         unique: true
+//     },
+//     password: {
+//         type: String,
+//         required: true,
+//         minlength: 6
+//     },
+//     userType: {
+//         type:String,
+//         required: true
+//     },
+//     profileImage:{
+//         type:String,
+//         default:""
+//     }
+// },
+//     {
+//         timestamps: true, //createdAt. updatedAt
+//     }
+// );
 //hash the password before saving user to the db.
-userSchema.pre("save", async function(next) {
+testUserSchema.pre("save", async function(next) {
     if(!this.isModified("password")) return next();
 
     const salt = await bcrypt.genSalt(10);
@@ -53,6 +78,6 @@ userSchema.pre("save", async function(next) {
     next()
 })
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', testUserSchema);
 
 export default User;

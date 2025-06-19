@@ -1,7 +1,12 @@
 import e from "express";
 import User from "../models/user.model.js";
+import jwt from 'jsonwebtoken'
 
 const authRouter = e.Router();
+
+const generateToken = (userId) => {
+    return jwt.sign({userId}, process.env.JWT_SECRET, {expiresIn: "15d"});
+}
 
 authRouter.post("/register", async (req, res) => {
     try {
@@ -23,7 +28,7 @@ authRouter.post("/register", async (req, res) => {
         if(existingUsername) return res.status(400).json({message:"Username is taken"})
 
         //get random avatar
-        const profileImage = `https://api.dicebear.com/7.x/avataars/svg?seed=${username}`
+        const profileImage = `https://api.dicebear.com/9.x/avataaars/svg?seed=${username}`
 
         const user = new User({
             email,
@@ -33,8 +38,20 @@ authRouter.post("/register", async (req, res) => {
         });
 
         await user.save();
+
+        const token = generateToken(user._id)
+        res.status(201).json({
+            token,
+            user:{
+                _id: user._id,
+                username: user.username,
+                email: user.email,
+                profileImage: user.profileImage,
+            },
+        });
     } catch (error) {
-        
+        console.log("Error in register route")
+        res.status(500).json({message:"Inner Server Error."})
     }
 })
 
