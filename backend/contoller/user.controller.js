@@ -22,7 +22,7 @@ export const createUser = async (req, res) => {
     }
 }
 
-export const getUser = async(req, res) => {
+export const getUser = async (req, res) => {
     const { id } = req.params;
     try {
         var founduser = await User.findById(id);
@@ -56,7 +56,7 @@ export const deleteUser = async (req, res) => {
     const { id } = req.params;
     try {
         await User.findByIdAndDelete(id);
-        res.status(200).json({success:true, message:"Product deleted successfully."})
+        res.status(200).json({success:true, message:"User deleted successfully."})
     } catch (error) {
         res.status(500).json({success:false, message:"Couldn't delete the User."})
         console.error(error)

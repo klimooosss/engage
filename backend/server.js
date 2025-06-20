@@ -4,6 +4,7 @@ import { connectDB } from './config/db.js';
 
 import userRoutes from './routes/user.route.js'
 import authRoutes from './routes/auth.route.js'
+import dealRoutes from './routes/deal.route.js'
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(express.json()); //allows us to accept JSON data in the body | MIDDLE-WA
 
 //route system
 app.use("/api/auth", authRoutes)
+app.use("/api/deal", dealRoutes)
 
 app.listen(PORT, () => {
     connectDB();
