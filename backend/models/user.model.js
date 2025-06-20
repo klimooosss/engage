@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import bcrypt from 'bcrypt'
+import bcrypt, { compare } from 'bcrypt'
 
 //test user schema for testing
 const testUserSchema = new mongoose.Schema({
@@ -76,7 +76,12 @@ testUserSchema.pre("save", async function(next) {
     this.password = await bcrypt.hash(this.password, salt);
 
     next()
-})
+});
+
+// compare password function
+testUserSchema.methods.comparePassword = async function(userPassword) {
+    return await bcrypt.compare(userPassword, this.password);
+}
 
 const User = mongoose.model('User', testUserSchema);
 
