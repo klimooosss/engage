@@ -32,40 +32,52 @@ dealRouter.post("/create", protectRoute, async (req, res) => {
     }
 });
 
-dealRouter.delete("/:dealId",protectRoute, async (req, res) => {
+dealRouter.delete("/:dealId", protectRoute, async (req, res) => {
     const { dealId } = req.params;
     try {
-        await Deal.findByIdAndDelete(dealId);
-        res.status(200).json({success:true, message:"Deal deleted successfully."})
+        const deal = await Deal.findById(dealId);
+        if(!deal) return res.status(404).json({message:"Book not found."})
+
+        if (deal.user.toString() !== req.user._id.toString())
+            return res.status(401).json({message:"Unauthorized."});
+
+        
+        await Deal.deleteOne();
+        res.json({success:true, message:"Deal deleted successfully."})
+
     } catch (error) {
         res.status(500).json({success:false, message:"Couldn't delete the Deal."})
         console.error(error)
     }
 });
 
-dealRouter.put("/:dealId",protectRoute, async (req, res) => {
-    const {dealId} = req.params;
-        
-    const deal = req.body;
-
-    if(!mongoose.Types.ObjectId.isValid(dealId)) {
-        return res.status(404).json({success:false, message:"Invalid Deal ID"})
-    }
-
+dealRouter.put("/:dealId", protectRoute, async (req, res) => {
     try {
+        const {dealId} = req.params;
+        
+        const deal = req.body;
+
+        if(!mongoose.Types.ObjectId.isValid(dealId)) {
+            return res.status(404).json({success:false, message:"Invalid Deal ID"})
+        }
+
+        if (deal.user.toString() !== req.user._id.toString())
+            return res.status(401).json({message:"Unauthorized."});
+
+
         const updatedDeal = await Deal.findByIdAndUpdate(dealId, deal, {new:true})
-        res.status(200).json({success:true, data:updatedDeal})
+        res.status(200).json({data:updatedDeal})
     } catch (error) {
         res.status(500).json({success:false, message:"Couldn't update the User."})
         console.error(error)
     }
 });
 
-dealRouter.get("/:dealId",protectRoute, async (req, res) => {
+dealRouter.get("/:dealId", protectRoute, async (req, res) => {
     const { dealId } = req.params;
     try {
         var foundDeal = await Deal.findById(dealId);
-        res.status(200).json({success:true, data:foundDeal})
+        res.status(200).json({success:true, message:"Deal found successfully.", data:foundDeal})
     } catch (error) {
         res.status(500).json({success:false, message:"Couldn't find the Deal."})
         console.error(error)
