@@ -7,7 +7,8 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.17.0",
-    "mongoose": "^8.16.0"
+    "mongoose": "^8.16.0",
+    "zustand": "^5.0.5"
   },
   "name": "engage-proj",
   "version": "1.0.0",

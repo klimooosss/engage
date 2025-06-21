@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useAuthStore } from '../store/authStore';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -12,6 +13,10 @@ const SignUp = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [formAppear, setFormAppear] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const { user, sayHello } = useAuthStore();
+
+  console.log("user is here: ", user)
 
   const formRefs = {
     email: useRef(null),
@@ -45,6 +50,8 @@ const SignUp = () => {
     clientTypes: [],
     servicesOffered: []
   });
+
+  console.log(setForm.email)
 
   const roleOptions = [
     {
@@ -187,6 +194,9 @@ const SignUp = () => {
   };
 
   const handleNext = () => {
+
+    sayHello();
+
     if (validateStep(step)) {
       setFormAppear(false);
       setTimeout(() => {
@@ -231,6 +241,9 @@ const SignUp = () => {
   };
 
   const handleSubmit = async (e) => {
+
+    sayHello();
+
     e.preventDefault();
     setLoading(true);
     setError('');
