@@ -19,16 +19,14 @@ const SignUp = () => {
   const formRefs = {
     email: useRef(null),
     password: useRef(null),
-    firstName: useRef(null),
-    lastName: useRef(null)
+    username: useRef(null)
   };
 
   const [form, setForm] = useState({
     email: '',
     password: '',
     role: 'creator',
-    firstName: '',
-    lastName: '',
+    username: '',
     companyName: '',
     bio: '',
     interests: [],
@@ -127,12 +125,24 @@ const SignUp = () => {
   };
 
   const handleArrayChange = (name, value) => {
-    setForm(prev => ({
-      ...prev,
-      [name]: prev[name].includes(value)
-        ? prev[name].filter(item => item !== value)
-        : [...prev[name], value]
-    }));
+    setForm(prev => {
+      const currentArray = prev[name];
+      const isSelected = currentArray.includes(value);
+
+      if (name === 'contentTypes') {
+        if (!isSelected && currentArray.length >= 4) {
+          setError('You can select a maximum of 4 content types.');
+          return prev;
+        }
+      }
+      
+      const newArray = isSelected
+        ? currentArray.filter(item => item !== value)
+        : [...currentArray, value];
+
+      return { ...prev, [name]: newArray };
+    });
+    if (name === 'contentTypes') setError('');
   };
 
   const validateStep = (currentStep) => {
@@ -152,7 +162,7 @@ const SignUp = () => {
         }
         break;
       case 2:
-        if (!form.firstName || !form.lastName || !form.role) {
+        if (!form.username || !form.role) {
           setError('Please fill in all required fields');
           return false;
         }
@@ -168,6 +178,10 @@ const SignUp = () => {
           case 'creator':
             if (form.contentTypes.length === 0) {
               setError('Please select at least one content type');
+              return false;
+            }
+            if (form.contentTypes.length > 4) {
+              setError('You can select a maximum of 4 content types.');
               return false;
             }
             break;
@@ -198,7 +212,7 @@ const SignUp = () => {
       setTimeout(() => {
         setStep(prev => prev + 1);
         setFormAppear(true);
-      }, 300);
+      }, 150);
       setError('');
     }
   };
@@ -208,7 +222,7 @@ const SignUp = () => {
     setTimeout(() => {
       setStep(prev => prev - 1);
       setFormAppear(true);
-    }, 300);
+    }, 150);
     setError('');
   };
 
@@ -227,7 +241,7 @@ const SignUp = () => {
       setTimeout(() => {
         setStep(2);
         setFormAppear(true);
-      }, 300);
+      }, 150);
     } catch (err) {
       setError(`${provider} signup failed. Please try again.`);
     } finally {
@@ -368,37 +382,20 @@ const SignUp = () => {
       </div>
 
       <div className="form-row">
-        <div className={`form-group ${isFocused.firstName ? 'focused' : ''}`}>
-          <label htmlFor="firstName">First Name</label>
+        <div className={`form-group ${isFocused.username ? 'focused' : ''}`}>
+          <label htmlFor="username">Username</label>
           <input
-            ref={formRefs.firstName}
-            id="firstName"
+            ref={formRefs.username}
+            id="username"
             type="text"
-            name="firstName"
-            value={form.firstName}
+            name="username"
+            value={form.username}
             onChange={handleChange}
-            onFocus={() => handleFocus('firstName')}
-            onBlur={() => handleBlur('firstName')}
-            placeholder="Enter your first name"
+            onFocus={() => handleFocus('username')}
+            onBlur={() => handleBlur('username')}
+            placeholder="Enter your username"
             disabled={loading}
-            className={error && !form.firstName ? 'error' : ''}
-          />
-        </div>
-
-        <div className={`form-group ${isFocused.lastName ? 'focused' : ''}`}>
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            ref={formRefs.lastName}
-            id="lastName"
-            type="text"
-            name="lastName"
-            value={form.lastName}
-            onChange={handleChange}
-            onFocus={() => handleFocus('lastName')}
-            onBlur={() => handleBlur('lastName')}
-            placeholder="Enter your last name"
-            disabled={loading}
-            className={error && !form.lastName ? 'error' : ''}
+            className={error && !form.username ? 'error' : ''}
           />
         </div>
       </div>
@@ -760,7 +757,7 @@ const SignUp = () => {
                     <option value="21-50">21-50 employees</option>
                     <option value="51-100">51-100 employees</option>
                     <option value="100+">100+ employees</option>
-        </select>
+                  </select>
                   <div className="select-arrow">▼</div>
                 </div>
               </div>
@@ -899,11 +896,11 @@ const SignUp = () => {
           {step === 3 && renderStep3()}
           {step === 4 && renderStep4()}
           
-        {error && <div className="auth-error">{error}</div>}
-      </form>
+          {error && <div className="auth-error">{error}</div>}
+        </form>
       </div>
     </div>
   );
 };
 
-export default SignUp; 
+export default SignUp;
