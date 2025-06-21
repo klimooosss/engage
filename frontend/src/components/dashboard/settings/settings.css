@@ -1,0 +1,743 @@
+/* Settings Styles */
+.settings-container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+  min-height: 600px;
+}
+
+.settings-sidebar {
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  height: fit-content;
+  position: sticky;
+  top: 2rem;
+}
+
+.settings-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  text-align: left;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  position: relative;
+}
+
+.settings-tab::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  transition: width 0.2s ease;
+  z-index: 0;
+}
+
+.settings-tab:hover {
+  background: rgba(59, 130, 246, 0.05);
+  color: #1e293b;
+}
+
+.settings-tab:hover::before {
+  width: 4px;
+}
+
+.settings-tab.active {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.settings-tab.active::before {
+  width: 4px;
+  background: white;
+}
+
+.tab-icon {
+  font-size: 1.25rem;
+  z-index: 1;
+  position: relative;
+}
+
+.tab-label {
+  font-weight: 600;
+  z-index: 1;
+  position: relative;
+}
+
+.settings-main {
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  min-height: 600px;
+}
+
+.settings-section {
+  max-width: 900px;
+}
+
+.settings-header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.settings-header h3 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.75rem;
+}
+
+.settings-header p {
+  color: #64748b;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.settings-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 2rem;
+  border-top: 2px solid #e2e8f0;
+  margin-top: 2rem;
+}
+
+.save-btn {
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.save-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.save-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.save-btn:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Toggle Switch Styles */
+.toggle-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: rgba(59, 130, 246, 0.02);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.toggle-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.toggle-item:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.toggle-info {
+  flex: 1;
+  padding-right: 2rem;
+  z-index: 1;
+  position: relative;
+}
+
+.toggle-info label {
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.toggle-description {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.toggle-control {
+  position: relative;
+  min-width: 56px;
+  z-index: 1;
+}
+
+.toggle-control input[type="checkbox"] {
+  display: none;
+}
+
+.toggle-slider {
+  position: relative;
+  display: block;
+  width: 56px;
+  height: 28px;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-control input[type="checkbox"]:checked + .toggle-slider {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+.toggle-control input[type="checkbox"]:checked + .toggle-slider::before {
+  transform: translateX(28px);
+}
+
+.toggle-slider.error {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+}
+
+.toggle-slider.success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+}
+
+/* Form Grid Styles */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 1rem 1.25rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background: white;
+  color: #1e293b;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-group input::placeholder,
+.form-group select::placeholder,
+.form-group textarea::placeholder {
+  color: #94a3b8;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Notification Categories */
+.notification-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.notification-category {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+}
+
+.notification-category h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+/* Security Options */
+.security-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: rgba(59, 130, 246, 0.02);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+/* Billing Overview */
+.billing-overview {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border: 1px solid #bae6fd;
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.plan-info h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0c4a6e;
+  margin-bottom: 1rem;
+}
+
+.plan-details {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.plan-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0c4a6e;
+}
+
+.plan-price {
+  background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Avatar Section */
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-preview {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border: 4px solid white;
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  text-transform: uppercase;
+}
+
+.avatar-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.upload-btn,
+.remove-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.upload-btn {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
+
+.upload-btn:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
+}
+
+.remove-btn {
+  background: white;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.1);
+}
+
+.remove-btn:hover {
+  background: #fef2f2;
+  border-color: #f87171;
+  color: #b91c1c;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(220, 38, 38, 0.2);
+}
+
+/* Avatar Upload Styles */
+.avatar-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Responsive Design for Settings */
+@media (max-width: 1200px) {
+  .settings-container {
+    grid-template-columns: 250px 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .settings-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .settings-sidebar {
+    order: 2;
+    position: static;
+    display: flex;
+    overflow-x: auto;
+    padding: 1rem;
+  }
+  
+  .settings-tab {
+    flex-shrink: 0;
+    min-width: 150px;
+    margin-bottom: 0;
+    margin-right: 0.5rem;
+  }
+  
+  .settings-main {
+    order: 1;
+    padding: 2rem;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .settings-main {
+    padding: 1.5rem;
+  }
+  
+  .settings-sidebar {
+    padding: 1rem;
+  }
+  
+  .settings-tab {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
+  
+  .toggle-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .toggle-info {
+    padding-right: 0;
+  }
+  
+  .notification-category {
+    padding: 1.5rem;
+  }
+  
+  .billing-overview {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .settings-main {
+    padding: 1rem;
+  }
+  
+  .settings-header h3 {
+    font-size: 1.5rem;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 0.875rem 1rem;
+  }
+  
+  .save-btn {
+    padding: 0.875rem 2rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Settings Section Animation Control */
+.settings-section:not(.section-opened) .avatar-section,
+.settings-section:not(.section-opened) .form-grid,
+.settings-section:not(.section-opened) .settings-actions,
+.settings-section:not(.section-opened) .form-row,
+.settings-section:not(.section-opened) .form-group,
+.settings-section:not(.section-opened) .profile-field,
+.settings-section:not(.section-opened) input,
+.settings-section:not(.section-opened) textarea,
+.settings-section:not(.section-opened) .social-link-field,
+.settings-section:not(.section-opened) .toggle-group,
+.settings-section:not(.section-opened) .billing-plan,
+.settings-section:not(.section-opened) .security-option,
+.settings-section:not(.section-opened) .notification-group {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+
+/* Profile Section Animations */
+.settings-section.profile-opened .avatar-section {
+  animation: fadeInUp 0.5s ease;
+}
+
+.settings-section.profile-opened .form-grid {
+  animation: fadeInUp 0.5s ease 0.1s both;
+}
+
+.settings-section.profile-opened .form-row {
+  animation: fadeInUp 0.5s ease 0.2s both;
+}
+
+.settings-section.profile-opened .form-group,
+.settings-section.profile-opened .profile-field {
+  animation: fadeInUp 0.5s ease 0.3s both;
+}
+
+.settings-section.profile-opened .settings-actions {
+  animation: fadeInUp 0.5s ease 0.4s both;
+}
+
+/* Account Section Animations */
+.settings-section.account-opened .settings-header {
+  animation: fadeInUp 0.5s ease;
+}
+
+.settings-section.account-opened .form-group {
+  animation: fadeInUp 0.5s ease 0.1s both;
+}
+
+.settings-section.account-opened .settings-actions {
+  animation: fadeInUp 0.5s ease 0.2s both;
+}
+
+/* Notifications Section Animations */
+.settings-section.notifications-opened .settings-header {
+  animation: fadeInUp 0.5s ease;
+}
+
+.settings-section.notifications-opened .notification-group {
+  animation: fadeInRight 0.5s ease 0.1s both;
+}
+
+.settings-section.notifications-opened .toggle-group {
+  animation: fadeInRight 0.5s ease 0.2s both;
+}
+
+/* Security Section Animations */
+.settings-section.security-opened .settings-header {
+  animation: fadeInUp 0.5s ease;
+}
+
+.settings-section.security-opened .security-option {
+  animation: fadeInRight 0.5s ease 0.1s both;
+}
+
+.settings-section.security-opened .form-group {
+  animation: fadeInRight 0.5s ease 0.2s both;
+}
+
+/* Billing Section Animations */
+.settings-section.billing-opened .settings-header {
+  animation: fadeInUp 0.5s ease;
+}
+
+.settings-section.billing-opened .billing-plan {
+  animation: fadeInUp 0.5s ease 0.1s both;
+}
+
+.settings-section.billing-opened .form-group {
+  animation: fadeInUp 0.5s ease 0.2s both;
+}
+
+.settings-section.billing-opened .settings-actions {
+  animation: fadeInUp 0.5s ease 0.3s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+} 

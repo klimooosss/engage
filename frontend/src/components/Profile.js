@@ -1,6 +1,137 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import './Profile.css';
 
+// Avatar upload component
+const AvatarUpload = ({ avatar, onUpload, onRemove, profileData, createNotification, isEditing }) => {
+  const fileInputRef = useRef(null);
+  
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        createNotification('Image size should be less than 5MB', 'error');
+        return;
+      }
+      
+      if (!file.type.startsWith('image/')) {
+        createNotification('Please upload an image file', 'error');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        onUpload(e.target.result);
+        createNotification('Profile photo updated successfully', 'success');
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  return (
+    <div className="profile-avatar-section">
+      <div className="avatar-preview">
+        {avatar ? (
+          <img src={avatar} alt="Profile" className="avatar-image" />
+        ) : (
+          <div className="avatar-placeholder">
+            {profileData.name.split(' ').map(n => n[0]).join('')}
+          </div>
+        )}
+        {profileData.verified && (
+          <div className="verified-badge">
+            <span>✓</span>
+          </div>
+        )}
+      </div>
+      {isEditing && (
+        <div className="avatar-actions">
+          <button 
+            className="upload-btn"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <span className="btn-icon">📷</span>
+            Change Photo
+          </button>
+          {avatar && (
+            <button 
+              className="remove-btn"
+              onClick={() => {
+                onRemove();
+                createNotification('Profile photo removed', 'success');
+              }}
+            >
+              <span className="btn-icon">🗑️</span>
+              Remove
+            </button>
+          )}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleFileSelect}
+            style={{ display: 'none' }}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Profile field component
+const ProfileField = ({ label, value, onChange, type = 'text', error, placeholder, required, disabled = false }) => {
+  const [focused, setFocused] = useState(false);
+  const id = useMemo(() => `profile-${label.toLowerCase().replace(/\s+/g, '-')}`, [label]);
+
+  return (
+    <div className={`profile-field ${focused ? 'focused' : ''} ${error ? 'error' : ''}`}>
+      <label htmlFor={id}>
+        {label}
+        {required && <span className="required">*</span>}
+      </label>
+      {type === 'textarea' ? (
+        <textarea
+          id={id}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          placeholder={placeholder}
+          rows={4}
+          disabled={disabled}
+        />
+      ) : (
+        <input
+          id={id}
+          type={type}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          placeholder={placeholder}
+          disabled={disabled}
+        />
+      )}
+      {error && <span className="error-message">{error}</span>}
+    </div>
+  );
+};
+
+// Social link field component
+const SocialLinkField = ({ platform, value, onChange, icon, isEditing }) => {
+  return (
+    <div className="social-link-field">
+      <div className="social-icon">{icon}</div>
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={`Your ${platform} username`}
+        disabled={!isEditing}
+      />
+    </div>
+  );
+};
+
 const Profile = () => {
   // Mock user data - in real app this would come from context or API
   const [user, setUser] = useState({
@@ -45,137 +176,6 @@ const Profile = () => {
       setNotifications(prev => prev.filter(n => n.id !== id));
     }, 5000);
   }, []);
-
-  // Avatar upload component
-  const AvatarUpload = ({ avatar, onUpload, onRemove }) => {
-    const fileInputRef = useRef(null);
-    
-    const handleFileSelect = (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        if (file.size > 5 * 1024 * 1024) {
-          createNotification('Image size should be less than 5MB', 'error');
-          return;
-        }
-        
-        if (!file.type.startsWith('image/')) {
-          createNotification('Please upload an image file', 'error');
-          return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          onUpload(e.target.result);
-          createNotification('Profile photo updated successfully', 'success');
-        };
-        reader.readAsDataURL(file);
-      }
-    };
-
-    return (
-      <div className="profile-avatar-section">
-        <div className="avatar-preview">
-          {avatar ? (
-            <img src={avatar} alt="Profile" className="avatar-image" />
-          ) : (
-            <div className="avatar-placeholder">
-              {profileData.name.split(' ').map(n => n[0]).join('')}
-            </div>
-          )}
-          {profileData.verified && (
-            <div className="verified-badge">
-              <span>✓</span>
-            </div>
-          )}
-        </div>
-        {isEditing && (
-          <div className="avatar-actions">
-            <button 
-              className="upload-btn"
-              onClick={() => fileInputRef.current?.click()}
-            >
-              <span className="btn-icon">📷</span>
-              Change Photo
-            </button>
-            {avatar && (
-              <button 
-                className="remove-btn"
-                onClick={() => {
-                  onRemove();
-                  createNotification('Profile photo removed', 'success');
-                }}
-              >
-                <span className="btn-icon">🗑️</span>
-                Remove
-              </button>
-            )}
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handleFileSelect}
-              style={{ display: 'none' }}
-            />
-          </div>
-        )}
-      </div>
-    );
-  };
-
-  // Profile field component
-  const ProfileField = ({ label, value, onChange, type = 'text', error, placeholder, required, disabled = false }) => {
-    const [focused, setFocused] = useState(false);
-    const id = useMemo(() => `profile-${label.toLowerCase().replace(/\s+/g, '-')}`, [label]);
-
-    return (
-      <div className={`profile-field ${focused ? 'focused' : ''} ${error ? 'error' : ''}`}>
-        <label htmlFor={id}>
-          {label}
-          {required && <span className="required">*</span>}
-        </label>
-        {type === 'textarea' ? (
-          <textarea
-            id={id}
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
-            placeholder={placeholder}
-            rows={4}
-            disabled={disabled}
-          />
-        ) : (
-          <input
-            id={id}
-            type={type}
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
-            placeholder={placeholder}
-            disabled={disabled}
-          />
-        )}
-        {error && <span className="error-message">{error}</span>}
-      </div>
-    );
-  };
-
-  // Social link field component
-  const SocialLinkField = ({ platform, value, onChange, icon }) => {
-    return (
-      <div className="social-link-field">
-        <div className="social-icon">{icon}</div>
-        <input
-          type="text"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder={`Your ${platform} username`}
-          disabled={!isEditing}
-        />
-      </div>
-    );
-  };
 
   // Validation function
   const validateProfile = useCallback((profile) => {
@@ -276,6 +276,9 @@ const Profile = () => {
                 avatar={profileData.avatar}
                 onUpload={(avatar) => handleProfileChange('avatar', avatar)}
                 onRemove={() => handleProfileChange('avatar', null)}
+                profileData={profileData}
+                createNotification={createNotification}
+                isEditing={isEditing}
               />
               
               <div className="profile-info">
@@ -407,24 +410,28 @@ const Profile = () => {
                     value={profileData.socialLinks?.instagram || ''}
                     onChange={(value) => handleProfileChange('socialLinks', { ...profileData.socialLinks, instagram: value })}
                     icon="📷"
+                    isEditing={isEditing}
                   />
                   <SocialLinkField
                     platform="youtube"
                     value={profileData.socialLinks?.youtube || ''}
                     onChange={(value) => handleProfileChange('socialLinks', { ...profileData.socialLinks, youtube: value })}
                     icon="📺"
+                    isEditing={isEditing}
                   />
                   <SocialLinkField
                     platform="twitter"
                     value={profileData.socialLinks?.twitter || ''}
                     onChange={(value) => handleProfileChange('socialLinks', { ...profileData.socialLinks, twitter: value })}
                     icon="🐦"
+                    isEditing={isEditing}
                   />
                   <SocialLinkField
                     platform="tiktok"
                     value={profileData.socialLinks?.tiktok || ''}
                     onChange={(value) => handleProfileChange('socialLinks', { ...profileData.socialLinks, tiktok: value })}
                     icon="🎵"
+                    isEditing={isEditing}
                   />
                 </div>
               </div>

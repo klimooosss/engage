@@ -2095,6 +2095,51 @@ section.visible {
   transform: translateX(-3px);
 }
 
+.return-home-btn {
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 113, 227, 0.2);
+  border-radius: 50px;
+  color: #0071e3;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 12px rgba(0, 113, 227, 0.1);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  text-decoration: none;
+}
+
+.return-home-btn:hover {
+  background: rgba(255, 255, 255, 1);
+  color: #0051a3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 113, 227, 0.2);
+  border-color: rgba(0, 113, 227, 0.3);
+}
+
+.return-home-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 113, 227, 0.15);
+}
+
+.return-icon {
+  font-size: 1.125rem;
+  font-weight: 700;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.return-home-btn:hover .return-icon {
+  transform: translateX(-3px);
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .auth-page {
@@ -2128,6 +2173,14 @@ section.visible {
   .demo-label {
     text-align: center;
     min-width: auto;
+  }
+
+  .return-home-btn {
+    top: 1rem;
+    left: 1rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+    border-radius: 40px;
   }
 }
 
