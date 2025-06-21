@@ -13,13 +13,14 @@ const dealSchema = new mongoose.Schema({
         type:String,
         required: true,
     },
-    companyAccId: {
-        type: String,
-        required: true,
-    },
     Image:{
         type:String,
         default:""
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
     }
 },
     {
