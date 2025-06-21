@@ -1,0 +1,114 @@
+2025-06-20 20:21:48,562 - ERROR - Scraping error
+Traceback (most recent call last):
+  File "/Users/meital/untitled folder/scraper/app.py", line 198, in run_scraping
+    businesses = scraper.scrape(
+                 ^^^^^^^^^^^^^^
+AttributeError: 'BusinessScraper' object has no attribute 'scrape'
+2025-06-20 20:21:49,279 - ERROR - Scraping error
+Traceback (most recent call last):
+  File "/Users/meital/untitled folder/scraper/app.py", line 198, in run_scraping
+    businesses = scraper.scrape(
+                 ^^^^^^^^^^^^^^
+AttributeError: 'BusinessScraper' object has no attribute 'scrape'
+2025-06-20 20:21:50,968 - ERROR - Scraping error
+Traceback (most recent call last):
+  File "/Users/meital/untitled folder/scraper/app.py", line 198, in run_scraping
+    businesses = scraper.scrape(
+                 ^^^^^^^^^^^^^^
+AttributeError: 'BusinessScraper' object has no attribute 'scrape'
+2025-06-20 20:21:51,416 - ERROR - Scraping error
+Traceback (most recent call last):
+  File "/Users/meital/untitled folder/scraper/app.py", line 198, in run_scraping
+    businesses = scraper.scrape(
+                 ^^^^^^^^^^^^^^
+AttributeError: 'BusinessScraper' object has no attribute 'scrape'
+2025-06-20 20:21:51,583 - ERROR - Scraping error
+Traceback (most recent call last):
+  File "/Users/meital/untitled folder/scraper/app.py", line 198, in run_scraping
+    businesses = scraper.scrape(
+                 ^^^^^^^^^^^^^^
+AttributeError: 'BusinessScraper' object has no attribute 'scrape'
+2025-06-20 20:21:51,747 - ERROR - Scraping error
+Traceback (most recent call last):
+  File "/Users/meital/untitled folder/scraper/app.py", line 198, in run_scraping
+    businesses = scraper.scrape(
+                 ^^^^^^^^^^^^^^
+AttributeError: 'BusinessScraper' object has no attribute 'scrape'
+2025-06-20 20:21:51,914 - ERROR - Scraping error
+Traceback (most recent call last):
+  File "/Users/meital/untitled folder/scraper/app.py", line 198, in run_scraping
+    businesses = scraper.scrape(
+                 ^^^^^^^^^^^^^^
+AttributeError: 'BusinessScraper' object has no attribute 'scrape'
+2025-06-20 20:21:52,060 - ERROR - Scraping error
+Traceback (most recent call last):
+  File "/Users/meital/untitled folder/scraper/app.py", line 198, in run_scraping
+    businesses = scraper.scrape(
+                 ^^^^^^^^^^^^^^
+AttributeError: 'BusinessScraper' object has no attribute 'scrape'
+2025-06-20 20:21:52,208 - ERROR - Scraping error
+Traceback (most recent call last):
+  File "/Users/meital/untitled folder/scraper/app.py", line 198, in run_scraping
+    businesses = scraper.scrape(
+                 ^^^^^^^^^^^^^^
+AttributeError: 'BusinessScraper' object has no attribute 'scrape'
+2025-06-20 20:21:52,357 - ERROR - Scraping error
+Traceback (most recent call last):
+  File "/Users/meital/untitled folder/scraper/app.py", line 198, in run_scraping
+    businesses = scraper.scrape(
+                 ^^^^^^^^^^^^^^
+AttributeError: 'BusinessScraper' object has no attribute 'scrape'
+2025-06-20 20:21:52,520 - ERROR - Scraping error
+Traceback (most recent call last):
+  File "/Users/meital/untitled folder/scraper/app.py", line 198, in run_scraping
+    businesses = scraper.scrape(
+                 ^^^^^^^^^^^^^^
+AttributeError: 'BusinessScraper' object has no attribute 'scrape'
+2025-06-20 20:21:52,694 - ERROR - Scraping error
+Traceback (most recent call last):
+  File "/Users/meital/untitled folder/scraper/app.py", line 198, in run_scraping
+    businesses = scraper.scrape(
+                 ^^^^^^^^^^^^^^
+AttributeError: 'BusinessScraper' object has no attribute 'scrape'
+2025-06-20 20:21:52,852 - ERROR - Scraping error
+Traceback (most recent call last):
+  File "/Users/meital/untitled folder/scraper/app.py", line 198, in run_scraping
+    businesses = scraper.scrape(
+                 ^^^^^^^^^^^^^^
+AttributeError: 'BusinessScraper' object has no attribute 'scrape'
+2025-06-20 20:21:53,007 - ERROR - Scraping error
+Traceback (most recent call last):
+  File "/Users/meital/untitled folder/scraper/app.py", line 198, in run_scraping
+    businesses = scraper.scrape(
+                 ^^^^^^^^^^^^^^
+AttributeError: 'BusinessScraper' object has no attribute 'scrape'
+2025-06-20 20:21:53,183 - ERROR - Scraping error
+Traceback (most recent call last):
+  File "/Users/meital/untitled folder/scraper/app.py", line 198, in run_scraping
+    businesses = scraper.scrape(
+                 ^^^^^^^^^^^^^^
+AttributeError: 'BusinessScraper' object has no attribute 'scrape'
+2025-06-20 20:21:53,402 - ERROR - Scraping error
+Traceback (most recent call last):
+  File "/Users/meital/untitled folder/scraper/app.py", line 198, in run_scraping
+    businesses = scraper.scrape(
+                 ^^^^^^^^^^^^^^
+AttributeError: 'BusinessScraper' object has no attribute 'scrape'
+2025-06-20 20:21:53,547 - ERROR - Scraping error
+Traceback (most recent call last):
+  File "/Users/meital/untitled folder/scraper/app.py", line 198, in run_scraping
+    businesses = scraper.scrape(
+                 ^^^^^^^^^^^^^^
+AttributeError: 'BusinessScraper' object has no attribute 'scrape'
+2025-06-20 20:21:53,708 - ERROR - Scraping error
+Traceback (most recent call last):
+  File "/Users/meital/untitled folder/scraper/app.py", line 198, in run_scraping
+    businesses = scraper.scrape(
+                 ^^^^^^^^^^^^^^
+AttributeError: 'BusinessScraper' object has no attribute 'scrape'
+2025-06-20 20:21:53,895 - ERROR - Scraping error
+Traceback (most recent call last):
+  File "/Users/meital/untitled folder/scraper/app.py", line 198, in run_scraping
+    businesses = scraper.scrape(
+                 ^^^^^^^^^^^^^^
+AttributeError: 'BusinessScraper' object has no attribute 'scrape'
