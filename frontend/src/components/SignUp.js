@@ -7,15 +7,14 @@ const SignUp = () => {
   const [step, setStep] = useState(1);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [isFocused, setIsFocused] = useState({});
   const [socialSignupMethod, setSocialSignupMethod] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [formAppear, setFormAppear] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const { user, loading, register} = useAuthStore();
-
-
+  const { storeLoaging = loading, register } = useAuthStore();
   const formRefs = {
     email: useRef(null),
     password: useRef(null),
@@ -46,8 +45,6 @@ const SignUp = () => {
     clientTypes: [],
     servicesOffered: []
   });
-
-  console.log(setForm.email)
 
   const roleOptions = [
     {
@@ -227,7 +224,7 @@ const SignUp = () => {
   };
 
   const handleSocialSignup = async (provider) => {
-    setLoading(true);
+    setLoading(false)
     setError('');
     setSocialSignupMethod(provider);
 
@@ -245,19 +242,17 @@ const SignUp = () => {
     } catch (err) {
       setError(`${provider} signup failed. Please try again.`);
     } finally {
-      setLoading(false);
+    setLoading(false)
       setSocialSignupMethod(null);
     }
   };
 
   const handleSubmit = async (e) => {
 
-    const result = await register(username, email, password)
+    const result = await register(form.username, form.email, form.password);
     
-    if (!result.success) alert("ERROR", result.error)
-
     e.preventDefault();
-    setLoading(true);
+    setLoading(false)
     setError('');
 
     try {
@@ -269,7 +264,7 @@ const SignUp = () => {
     } catch (err) {
       setError('Registration failed. Please try again.');
     } finally {
-      setLoading(false);
+    setLoading(false);
     }
   };
 

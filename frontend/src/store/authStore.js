@@ -3,10 +3,10 @@ import { create } from "zustand";
 export const useAuthStore = create((set) => ({
     user: null,
     token:null,
-    loading: false,
+    storeLoading: false,
 
     register: async (username, email, password) => {
-        set({loading: true});
+        set({storeLoading: true});
         try {
             const response = fetch("http://localhost:5000/api/auth/register", {
                 method: "POST",
@@ -27,14 +27,14 @@ export const useAuthStore = create((set) => ({
             await localStorage.setItem("user", JSON.stringify(data));
             await localStorage.setItem("token", data.token);
 
-            set({token: data.token, user:data.user, loading: false})
+            set({token: data.token, user:data.user, storeLoading: false})
 
             return {
                 success: true
             };
 
         } catch (error) {
-            set({loading:false});
+            set({storeLoading:false});
             return {success:false, error: error.message}
         }
     }
