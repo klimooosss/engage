@@ -5,7 +5,6 @@ import { useAuthStore } from '../store/authStore';
 const SignUp = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [isFocused, setIsFocused] = useState({});
@@ -14,9 +13,8 @@ const SignUp = () => {
   const [formAppear, setFormAppear] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const { user, sayHello } = useAuthStore();
+  const { user, loading, register} = useAuthStore();
 
-  console.log("user is here: ", user)
 
   const formRefs = {
     email: useRef(null),
@@ -195,8 +193,6 @@ const SignUp = () => {
 
   const handleNext = () => {
 
-    sayHello();
-
     if (validateStep(step)) {
       setFormAppear(false);
       setTimeout(() => {
@@ -242,7 +238,9 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
 
-    sayHello();
+    const result = await register(username, email, password)
+    
+    if (!result.success) alert("ERROR", result.error)
 
     e.preventDefault();
     setLoading(true);
