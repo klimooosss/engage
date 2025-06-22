@@ -19,9 +19,20 @@ const Header = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const scrollToTop = () => {
+    if (window.location.pathname === '/') {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      navigate('/');
+    }
+  };
+
   return (
     <header className={`engage-header ${isScrolled ? 'scrolled' : ''}`}>
-      <div className="logo" onClick={() => navigate('/')}>Engage</div>
+      <div className="logo" onClick={scrollToTop} style={{ cursor: 'pointer' }}>Engage</div>
       <nav className={isMobileMenuOpen ? 'mobile-menu-open' : ''}>
         <a href="#features">Features</a>
         <a href="#creators">For Creators</a>

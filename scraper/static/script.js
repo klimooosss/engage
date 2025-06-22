@@ -424,37 +424,37 @@ document.addEventListener('DOMContentLoaded', function() {
             
             item.innerHTML = `
                 <div class="d-flex justify-content-between align-items-start mb-2">
-                    <h5 class="mb-0">${business.name}</h5>
+                    <h5 class="mb-0" style="color: black;">${business.name}</h5>
                     <span class="badge bg-secondary">${business.source}</span>
                 </div>
-                <p class="mb-2 business-address">
+                <p class="mb-2 business-address" style="color: black;">
                     <i class="fas fa-map-marker-alt text-danger"></i> ${business.address || 'No address available'}
                 </p>
                 ${business.phone ? `
-                    <p class="mb-2">
+                    <p class="mb-2" style="color: black;">
                         <i class="fas fa-phone text-success"></i> 
-                        <a href="tel:${business.phone}">${business.phone}</a>
+                        <a href="tel:${business.phone}" style="color: black;">${business.phone}</a>
                     </p>
                 ` : ''}
                 ${business.email ? `
-                    <p class="mb-2">
+                    <p class="mb-2" style="color: black;">
                         <i class="fas fa-envelope text-primary"></i> 
-                        <a href="mailto:${business.email}">${business.email}</a>
+                        <a href="mailto:${business.email}" style="color: black;">${business.email}</a>
                     </p>
                 ` : ''}
                 ${business.website ? `
-                    <p class="mb-2">
+                    <p class="mb-2" style="color: black;">
                         <i class="fas fa-globe text-info"></i> 
-                        <a href="${business.website}" target="_blank" rel="noopener noreferrer">${business.website}</a>
+                        <a href="${business.website}" target="_blank" rel="noopener noreferrer" style="color: black;">${business.website}</a>
                     </p>
                 ` : ''}
                 ${business.opening_hours ? `
-                    <p class="mb-2 business-hours">
+                    <p class="mb-2 business-hours" style="color: black;">
                         <i class="fas fa-clock text-warning"></i> ${business.opening_hours}
                     </p>
                 ` : ''}
                 ${business.cuisine ? `
-                    <p class="mb-2">
+                    <p class="mb-2" style="color: black;">
                         <i class="fas fa-utensils text-danger"></i> ${capitalizeWords(business.cuisine.replace(';', ', '))}
                     </p>
                 ` : ''}

@@ -752,10 +752,13 @@
   color: #94a3b8;
   font-weight: 500;
   margin-top: 0.25rem;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
 }
 
 .activity-amount, .creator-earnings {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: #16a34a;
   flex-shrink: 0;

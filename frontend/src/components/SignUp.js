@@ -14,7 +14,7 @@ const SignUp = () => {
   const [formAppear, setFormAppear] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const { storeLoaging = loading, register } = useAuthStore();
+  const { storeLoading = loading, register } = useAuthStore();
   const formRefs = {
     email: useRef(null),
     password: useRef(null),

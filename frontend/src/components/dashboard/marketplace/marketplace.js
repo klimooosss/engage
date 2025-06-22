@@ -5,11 +5,13 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
   // State for new deal modal
   const [showNewDealModal, setShowNewDealModal] = useState(false);
   const [showEditDealModal, setShowEditDealModal] = useState(false);
+  const [showDealDetailsModal, setShowDealDetailsModal] = useState(false);
+  const [selectedDeal, setSelectedDeal] = useState(null);
   const [editingDeal, setEditingDeal] = useState(null);
   const [newDealForm, setNewDealForm] = useState({
     title: '',
     description: '',
-    budget: '',
+    pay: '',
     category: 'Technology',
     platform: [],
     minFollowers: 1000,
@@ -29,7 +31,7 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
   const [editDealForm, setEditDealForm] = useState({
     title: '',
     description: '',
-    budget: '',
+    pay: '',
     category: 'Technology',
     platform: [],
     minFollowers: 1000,
@@ -116,7 +118,7 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
     setNewDealForm({
       title: '',
       description: '',
-      budget: '',
+      pay: '',
       category: 'Technology',
       platform: [],
       minFollowers: 1000,
@@ -142,7 +144,7 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
     const mappedDeal = {
       title: deal.title || '',
       description: deal.description || '',
-      budget: deal.budget ? deal.budget.replace(/[^0-9]/g, '') : '', // Extract numbers only
+      pay: deal.pay ? deal.pay.replace(/[^0-9]/g, '') : '', // Extract numbers only
       category: deal.category || 'Technology',
       platform: deal.platform || deal.requirements?.filter(req => 
         ['Instagram', 'TikTok', 'YouTube Shorts', 'Twitter/X'].some(p => req.includes(p))
@@ -218,8 +220,8 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
       return;
     }
     
-    if (!editDealForm.budget || editDealForm.budget <= 0) {
-      createNotification('Please enter a valid budget amount', 'error');
+    if (!editDealForm.pay || editDealForm.pay <= 0) {
+      createNotification('Please enter a valid pay amount', 'error');
       return;
     }
     
@@ -247,24 +249,15 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
     const changes = [];
     if (editingDeal.title !== editDealForm.title) changes.push('title');
     if (editingDeal.description !== editDealForm.description) changes.push('description');
-    if (editingDeal.budget !== `$${editDealForm.budget}`) changes.push('budget');
-    if (editingDeal.category !== editDealForm.category) changes.push('category');
+    if (editingDeal.pay !== `$${editDealForm.pay}`) changes.push('pay');
     
-    const changeMessage = changes.length > 0 
-      ? `Updated: ${changes.join(', ')}`
-      : 'No changes detected';
-    
-    createNotification(
-      `Deal "${editDealForm.title}" updated successfully! ${changeMessage} (No backend - demo only)`, 
-      'success'
-    );
-    
+    createNotification(`Deal "${editDealForm.title}" updated successfully! Changes: ${changes.join(', ')}`, 'success');
     setShowEditDealModal(false);
     setEditingDeal(null);
     setEditDealForm({
       title: '',
       description: '',
-      budget: '',
+      pay: '',
       category: 'Technology',
       platform: [],
       minFollowers: 1000,
@@ -280,6 +273,12 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
       deadline: '',
       tags: ''
     });
+  };
+
+  // Handle opening deal details modal
+  const handleViewDealDetails = (deal) => {
+    setSelectedDeal(deal);
+    setShowDealDetailsModal(true);
   };
 
   // Spectacular auto-save function
@@ -309,10 +308,10 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
       validation.description = 'Description should be at least 20 characters';
     }
     
-    if (!formData.budget || formData.budget <= 0) {
-      validation.budget = 'Valid budget is required';
-    } else if (formData.budget < 50) {
-      validation.budget = 'Budget should be at least $50';
+    if (!formData.pay || formData.pay <= 0) {
+      validation.pay = 'Valid pay is required';
+    } else if (formData.pay < 50) {
+      validation.pay = 'Pay should be at least $50';
     }
     
     if (formData.platform.length === 0) {
@@ -372,8 +371,8 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
         <p>{deal.description}</p>
         <div className="deal-metrics">
           <div className="metric">
-            <span className="label">Budget:</span>
-            <span className="value">{deal.budget}</span>
+            <span className="label">Pay:</span>
+            <span className="value">{deal.pay}</span>
           </div>
           <div className="metric">
             <span className="label">Engagement:</span>
@@ -404,7 +403,7 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
           <span>{deal.takenBy ? `Taken by ${deal.takenBy}` : 'Available'}</span>
         </div>
         <div className="deal-actions">
-          <button className="btn-secondary" onClick={() => userRole === 'brand' ? handleEditDeal(deal) : onView(deal)}>
+          <button className="btn-secondary" onClick={() => userRole === 'brand' ? handleEditDeal(deal) : handleViewDealDetails(deal)}>
             {userRole === 'brand' ? 'Edit Deal' : 'View Details'}
           </button>
           <button className="btn-primary" onClick={() => onApply(deal)}>
@@ -484,7 +483,7 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
             <option>Food</option>
           </select>
           <select className="filter-select">
-            <option>All Budgets</option>
+            <option>All Pays</option>
             <option>$100 - $500</option>
             <option>$500 - $1,000</option>
             <option>$1,000+</option>
@@ -520,7 +519,7 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
                   </div>
                   <div className="deal-meta">
                     <span>Taken: {deal.takenDate}</span>
-                    <span>Budget: {deal.budget}</span>
+                    <span>Pay: {deal.pay}</span>
                   </div>
                 </div>
               ))}
@@ -600,8 +599,8 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
                     <span>{deal.progress}% complete</span>
                   </div>
                   <div className="deal-meta">
-                    <span>Budget: {deal.budget}</span>
-                    <span>Taken: {deal.takenDate}</span>
+                    <span>Pay: {deal.pay}</span>
+                    <span>Assigned: {deal.assignedDate}</span>
                   </div>
                   <div className="deal-actions" style={{ marginTop: '1rem', display: 'flex', gap: '0.75rem' }}>
                     <button 
@@ -683,7 +682,7 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
             <option>Lead Generation</option>
           </select>
           <select className="filter-select">
-            <option>All Budgets</option>
+            <option>All Pays</option>
             <option>$5K - $10K</option>
             <option>$10K - $25K</option>
             <option>$25K+</option>
@@ -769,7 +768,7 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
                     <span>{deal.progress}% complete</span>
                   </div>
                   <div className="deal-meta">
-                    <span>Budget: {deal.budget}</span>
+                    <span>Pay: {deal.pay}</span>
                     <span>Assigned: {deal.assignedDate}</span>
                   </div>
                   <div className="deal-actions" style={{ marginTop: '1rem', display: 'flex', gap: '0.75rem' }}>
@@ -997,7 +996,7 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
                       fontSize: '1.2rem',
                       letterSpacing: '-0.01em'
                     }}>
-                      Fixed Budget *
+                      Fixed Pay *
                     </label>
                     <div style={{ position: 'relative' }}>
                       <span style={{
@@ -1013,8 +1012,8 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
                       </span>
                       <input
                         type="number"
-                        name="budget"
-                        value={newDealForm.budget}
+                        name="pay"
+                        value={newDealForm.pay}
                         onChange={handleFormChange}
                         required
                         min="1"
@@ -1980,7 +1979,7 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
                       fontSize: '1.2rem',
                       letterSpacing: '-0.01em'
                     }}>
-                      Fixed Budget *
+                      Fixed Pay *
                     </label>
                     <div style={{ position: 'relative' }}>
                       <span style={{
@@ -1996,9 +1995,9 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
                       </span>
                       <input
                         type="number"
-                        name="budget"
-                        value={editDealForm.budget}
-                        onChange={(e) => setEditDealForm(prev => ({ ...prev, budget: e.target.value }))}
+                        name="pay"
+                        value={editDealForm.pay}
+                        onChange={(e) => setEditDealForm(prev => ({ ...prev, pay: e.target.value }))}
                         required
                         min="1"
                         style={{
@@ -2590,6 +2589,102 @@ const Marketplace = ({ userRole, createNotification, marketplaceData }) => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+      
+      {/* Deal Details Modal */}
+      {showDealDetailsModal && selectedDeal && (
+        <div className="modal-overlay" onClick={() => setShowDealDetailsModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Deal Details</h2>
+              <button 
+                className="modal-close" 
+                onClick={() => setShowDealDetailsModal(false)}
+              >
+                ×
+              </button>
+            </div>
+            <div className="modal-body">
+              <div className="deal-details">
+                <div className="deal-brand-info">
+                  <span className="brand-logo">{selectedDeal.brandLogo}</span>
+                  <div>
+                    <h3>{selectedDeal.brand}</h3>
+                    <span className="category">{selectedDeal.category}</span>
+                  </div>
+                </div>
+                
+                <div className="deal-main-info">
+                  <h2>{selectedDeal.title}</h2>
+                  <p className="deal-description">{selectedDeal.description}</p>
+                  
+                  <div className="deal-metrics-detailed">
+                    <div className="metric-item">
+                      <span className="metric-label">Pay:</span>
+                      <span className="metric-value">{selectedDeal.pay}</span>
+                    </div>
+                    <div className="metric-item">
+                      <span className="metric-label">Engagement Rate:</span>
+                      <span className="metric-value">{selectedDeal.engagement}</span>
+                    </div>
+                    <div className="metric-item">
+                      <span className="metric-label">Reach:</span>
+                      <span className="metric-value">{selectedDeal.reach}</span>
+                    </div>
+                    <div className="metric-item">
+                      <span className="metric-label">Deadline:</span>
+                      <span className="metric-value">{selectedDeal.deadline}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="deal-requirements-detailed">
+                    <h4>Requirements:</h4>
+                    <ul>
+                      {selectedDeal.requirements.map((req, index) => (
+                        <li key={index}>{req}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <div className="deal-tags-detailed">
+                    <h4>Tags:</h4>
+                    <div className="tags-container">
+                      {selectedDeal.tags.map((tag, index) => (
+                        <span key={index} className="tag">{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="deal-status-info">
+                    <span className={`status-badge ${selectedDeal.status}`}>
+                      {selectedDeal.status}
+                    </span>
+                    {selectedDeal.takenBy && (
+                      <span className="taken-by">Taken by: {selectedDeal.takenBy}</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button 
+                className="btn-secondary" 
+                onClick={() => setShowDealDetailsModal(false)}
+              >
+                Close
+              </button>
+              <button 
+                className="btn-primary" 
+                onClick={() => {
+                  createNotification(`Deal "${selectedDeal.title}" taken successfully!`, 'success');
+                  setShowDealDetailsModal(false);
+                }}
+              >
+                Take Deal
+              </button>
+            </div>
           </div>
         </div>
       )}
