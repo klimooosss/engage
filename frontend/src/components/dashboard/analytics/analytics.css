@@ -251,8 +251,10 @@
 }
 
 .chart-labels {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  justify-items: center;
+  align-items: start;
   margin-top: 1rem;
   padding: 0 0.5rem;
 }
@@ -261,6 +263,9 @@
   font-size: 0.75rem;
   color: #64748b;
   text-align: center;
+  word-break: break-word;
+  white-space: pre-line;
+  max-width: 60px;
 }
 
 /* Pie Chart */
