@@ -1,9 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useAuthStore } from '../store/authStore';
 
 const SignIn = () => {
   const navigate = useNavigate();
-  
+
+  const {checkAuth, login} = useAuthStore();
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
   // Form state
   const [formData, setFormData] = useState({
     email: '',
@@ -24,7 +30,8 @@ const SignIn = () => {
   const [forgotEmail, setForgotEmail] = useState('');
   const [forgotLoading, setForgotLoading] = useState(false);
   const [forgotSuccess, setForgotSuccess] = useState(false);
-  
+
+
   // Refs
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
@@ -122,11 +129,18 @@ const SignIn = () => {
   };
 
   const handleSubmit = async (e) => {
+
+    const result = await login(formData.email, formData.password);
+
+    alert(result.success, result.error);
+
     e.preventDefault();
     if (!validateForm()) return;
 
     setLoading(true);
     setError('');
+
+
 
     try {
       // Mock authentication
