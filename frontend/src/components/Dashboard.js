@@ -12,10 +12,13 @@ import Settings from './dashboard/settings/settings';
 import Profile from './dashboard/profile/profile';
 import Payouts from './dashboard/payout/payout';
 import Billing from './dashboard/billing/billing';
+import { useAuthStore } from '../store/authStore';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { logout } = useAuthStore();
 
   // Helper functions
   const getCurrentSection = useCallback(() => {
@@ -362,6 +365,9 @@ const Dashboard = () => {
 
   // Logout handler
   const handleLogout = useCallback(() => {
+
+    logout();
+
     localStorage.removeItem('userRole');
     navigate('/');
   }, [navigate]);
