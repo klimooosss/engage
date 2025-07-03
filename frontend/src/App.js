@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -11,9 +12,10 @@ import Footer from './components/Footer';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import Dashboard from './components/Dashboard';
-import Profile from './components/Profile';
+import AdminPanel from './components/AdminPanel';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import ErrorBoundary from './components/ErrorBoundary';
 
 function AppContent() {
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -89,6 +91,7 @@ function AppContent() {
         <Route path="/profile" element={<Dashboard />} />
         <Route path="/payouts" element={<Dashboard />} />
         <Route path="/billing" element={<Dashboard />} />
+        <Route path="/admin" element={<AdminPanel />} />
       </Routes>
       {!isAuthPage && !isDashboardPage && <Footer />}
     </div>
@@ -98,7 +101,9 @@ function AppContent() {
 function App() {
   return (
     <Router>
-      <AppContent />
+      <ErrorBoundary>
+        <AppContent />
+      </ErrorBoundary>
     </Router>
   );
 }

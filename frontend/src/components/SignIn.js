@@ -25,7 +25,6 @@ const SignIn = () => {
   const [success, setSuccess] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isFocused, setIsFocused] = useState({ email: false, password: false });
-  const [socialSigninMethod, setSocialSigninMethod] = useState(null);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [forgotEmail, setForgotEmail] = useState('');
   const [forgotLoading, setForgotLoading] = useState(false);
@@ -168,7 +167,6 @@ const SignIn = () => {
   const handleSocialSignin = async (provider) => {
     setLoading(true);
     setError('');
-    setSocialSigninMethod(provider);
 
     try {
       // Mock social signin
@@ -185,7 +183,6 @@ const SignIn = () => {
       setError(`${provider} signin failed. Please try again.`);
     } finally {
       setLoading(false);
-      setSocialSigninMethod(null);
     }
   };
 
@@ -408,7 +405,7 @@ const SignIn = () => {
       </div>
 
       <p className="auth-footer">
-        Don't have an account?{' '}
+        Don&apos;t have an account?{' '}
         <Link to="/signup" className="auth-link">
           Create account
         </Link>
